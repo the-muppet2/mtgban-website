@@ -215,6 +215,9 @@
             <div class="indent" style="max-width: 85%;">
                 {{if .LargeTable}}
                     <br>
+                    {{if eq $.ScraperShort "SYP"}}
+                        <a class="btn success" href="/newspaper?page=syp&sort={{$.SortOption}}&format=csv">Download CSV</a>
+                    {{end}}
                     {{else}}
                     <p>
                         Jump to
