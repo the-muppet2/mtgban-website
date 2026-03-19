@@ -22,20 +22,43 @@
 </head>
 
 <body class="light-theme">
-    {{template "navbar" .}}
+<script>
+(function() {
+    var stored = localStorage.getItem('theme');
+    var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.body.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
+})();
+</script>
 
-    <div class="bg">
-        <div class="mainbody">
-            {{if .PatreonLogin}}
-                <div class="indent">
-                    <form class="search autocomplete" action="search" autocomplete="off" spellcheck="false" id="searchform">
-                        <input id="searchbox" class="w3-input w3-border w3-round-small search-input" onFocus="this.setSelectionRange(0, this.value.length)" type="text" name="q" placeholder="Quick price check" maxlength="1000" autofocus autocapitalize="none">
-                    </form>
-                </div>
+<div class="landing">
+    <div class="landing-main">
+        <div class="landing-brand">
+            <img src="/img/logo/ban-round.png" alt="BAN">
+            <span class="landing-brand-text">MTG<span class="ban">BAN</span></span>
+        </div>
+        <div class="landing-tagline">Data driven TCG price comparison</div>
 
-                <script type="text/javascript">
-                    autocomplete(document.getElementById("searchform"), document.getElementById("searchbox"), "false");
-                </script>
+        <div class="landing-search-wrap">
+            <span class="landing-search-icon">&#128269;</span>
+            <form class="autocomplete" action="search" autocomplete="off" spellcheck="false" id="searchform">
+                <input id="searchbox" class="landing-search" type="text" name="q"
+                       placeholder="Search for a card or product..."
+                       maxlength="1000" autofocus autocapitalize="none"
+                       onFocus="this.setSelectionRange(0, this.value.length)">
+            </form>
+            <a class="landing-lucky" href="/random">Surprise me</a>
+        </div>
+        <script type="text/javascript">
+            autocomplete(document.getElementById("searchform"), document.getElementById("searchbox"), "false");
+        </script>
+
+        <div class="landing-tools">
+            {{range .Nav}}
+                {{if and (ne .Name "Home") (ne .Class "beta")}}
+                    <a class="landing-tool" href="{{.Link}}">
+                        <span class="t-icon">{{.Short}}</span> {{.Name}}
+                    </a>
+                {{end}}
             {{end}}
         </div>
     </div>
