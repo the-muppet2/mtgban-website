@@ -1324,7 +1324,7 @@ func Newspaper(w http.ResponseWriter, r *http.Request) {
 		syp, err := findVendorBuylist("SYP")
 		if err != nil {
 			pageVars.InfoMessage = "SYP not configured yet"
-			render(w, "arbit.html", pageVars)
+			render(w, "arbit_results.html", pageVars)
 			return
 		}
 
@@ -1443,7 +1443,7 @@ func Newspaper(w http.ResponseWriter, r *http.Request) {
 
 		pageVars.Arb = append(pageVars.Arb, entry)
 
-		render(w, "arbit.html", pageVars)
+		render(w, "arbit_results.html", pageVars)
 
 		return
 	}
