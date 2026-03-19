@@ -149,7 +149,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 			pageVars.VendorKeys = append(pageVars.VendorKeys, vendor.Info().Shorthand)
 		}
 
-		render(w, "search.html", pageVars)
+		render(w, "search_options.html", pageVars)
 
 		return
 	}
@@ -195,7 +195,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 	if len(query) > MaxSearchQueryLen {
 		pageVars.ErrorMessage = TooLongMessage
 
-		render(w, "search.html", pageVars)
+		render(w, "search_landing.html", pageVars)
 		return
 	}
 
@@ -222,7 +222,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 
 			pageVars.EditionSort = SealedEditionsSorted
 			pageVars.EditionList = SealedEditionsList
-			render(w, "search.html", pageVars)
+			render(w, "search_sealed.html", pageVars)
 			return
 		} else if isSetsPage {
 			pageVars.Title = strings.Replace(pageVars.Title, "Search", "Editions", 1)
@@ -260,7 +260,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		render(w, "search.html", pageVars)
+		render(w, "search_landing.html", pageVars)
 		return
 	}
 
@@ -297,7 +297,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 	allKeys, err := searchAndFilter(config)
 	if err != nil {
 		pageVars.InfoMessage = NoCardsMessage
-		render(w, "search.html", pageVars)
+		render(w, "search_results.html", pageVars)
 		return
 	}
 
@@ -319,7 +319,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 		if hidePromos {
 			pageVars.InfoMessage = NoPromosMessage
 		}
-		render(w, "search.html", pageVars)
+		render(w, "search_results.html", pageVars)
 		return
 	}
 
@@ -693,7 +693,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 	if DevMode {
 		start = time.Now()
 	}
-	render(w, "search.html", pageVars)
+	render(w, "search_results.html", pageVars)
 	if DevMode {
 		log.Println("render took", time.Since(start))
 	}
