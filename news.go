@@ -1204,7 +1204,7 @@ func Newspaper(w http.ResponseWriter, r *http.Request) {
 		pageVars.Title = "This feature is not enabled"
 		pageVars.ErrorMessage = ErrMsgDenied
 
-		render(w, "news_data.html", pageVars)
+		render(w, "news.html", pageVars)
 		return
 	}
 
@@ -1228,7 +1228,7 @@ func Newspaper(w http.ResponseWriter, r *http.Request) {
 		pageVars.Title = "This feature is BANned"
 		pageVars.ErrorMessage = ErrMsgDenied
 
-		render(w, "news_data.html", pageVars)
+		render(w, "news.html", pageVars)
 		return
 	}
 
@@ -1303,7 +1303,7 @@ func Newspaper(w http.ResponseWriter, r *http.Request) {
 
 	switch page {
 	case "", "old":
-		render(w, "news_index.html", pageVars)
+		render(w, "news.html", pageVars)
 
 		return
 	case "options":
@@ -1312,7 +1312,7 @@ func Newspaper(w http.ResponseWriter, r *http.Request) {
 		pageVars.Editions = AllEditionsKeys
 		pageVars.EditionsMap = AllEditionsMap
 
-		render(w, "news_options.html", pageVars)
+		render(w, "news.html", pageVars)
 
 		return
 	case "syp":
@@ -1324,7 +1324,7 @@ func Newspaper(w http.ResponseWriter, r *http.Request) {
 		syp, err := findVendorBuylist("SYP")
 		if err != nil {
 			pageVars.InfoMessage = "SYP not configured yet"
-			render(w, "arbit_results.html", pageVars)
+			render(w, "arbit.html", pageVars)
 			return
 		}
 
@@ -1443,7 +1443,7 @@ func Newspaper(w http.ResponseWriter, r *http.Request) {
 
 		pageVars.Arb = append(pageVars.Arb, entry)
 
-		render(w, "arbit_results.html", pageVars)
+		render(w, "arbit.html", pageVars)
 
 		return
 	}
@@ -1497,7 +1497,7 @@ func Newspaper(w http.ResponseWriter, r *http.Request) {
 			if newspage.Results == nil {
 				pageVars.InfoMessage = "This data is not ready yet, please try again in a few minutes"
 				pageVars.LastUpdate = time.Now()
-				render(w, "news_data.html", pageVars)
+				render(w, "news.html", pageVars)
 				return
 			}
 
@@ -1813,5 +1813,5 @@ func Newspaper(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	render(w, "news_data.html", pageVars)
+	render(w, "news.html", pageVars)
 }

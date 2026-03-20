@@ -27,9 +27,9 @@ const (
 	MaxSearchResults  = 100
 	TooLongMessage    = "Your query planeswalked away, try a shorter one"
 	TooManyMessage    = "Too many results, try adjusting your filters"
-	NoResultsMessage  = "No results found"
-	NoPromosMessage   = "No results found! Remember some promos may be hidden"
-	NoCardsMessage    = "No cards found"
+	NoResultsMessage  = "No products matching your search could be found"
+	NoPromosMessage   = "No products matching your search could be found — some promos may be hidden"
+	NoCardsMessage    = "No products matching your search could be found"
 
 	MaxSearchTotalResults = 10000
 )
@@ -149,7 +149,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 			pageVars.VendorKeys = append(pageVars.VendorKeys, vendor.Info().Shorthand)
 		}
 
-		render(w, "search_options.html", pageVars)
+		render(w, "search.html", pageVars)
 
 		return
 	}
@@ -195,7 +195,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 	if len(query) > MaxSearchQueryLen {
 		pageVars.ErrorMessage = TooLongMessage
 
-		render(w, "search_landing.html", pageVars)
+		render(w, "search.html", pageVars)
 		return
 	}
 
@@ -222,7 +222,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 
 			pageVars.EditionSort = SealedEditionsSorted
 			pageVars.EditionList = SealedEditionsList
-			render(w, "search_sealed.html", pageVars)
+			render(w, "search.html", pageVars)
 			return
 		} else if isSetsPage {
 			pageVars.Title = strings.Replace(pageVars.Title, "Search", "Editions", 1)
@@ -260,7 +260,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		render(w, "search_landing.html", pageVars)
+		render(w, "search.html", pageVars)
 		return
 	}
 
@@ -297,7 +297,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 	allKeys, err := searchAndFilter(config)
 	if err != nil {
 		pageVars.InfoMessage = NoCardsMessage
-		render(w, "search_results.html", pageVars)
+		render(w, "search.html", pageVars)
 		return
 	}
 
@@ -319,7 +319,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 		if hidePromos {
 			pageVars.InfoMessage = NoPromosMessage
 		}
-		render(w, "search_results.html", pageVars)
+		render(w, "search.html", pageVars)
 		return
 	}
 
@@ -693,7 +693,7 @@ func Search(w http.ResponseWriter, r *http.Request) {
 	if DevMode {
 		start = time.Now()
 	}
-	render(w, "search_results.html", pageVars)
+	render(w, "search.html", pageVars)
 	if DevMode {
 		log.Println("render took", time.Since(start))
 	}
